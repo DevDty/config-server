@@ -1,4 +1,7 @@
-FROM openjdk
-COPY "/out/artifacts/config_server_jar/config_server.jar" "app.jar"
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
 EXPOSE 8090
-ENTRYPOINT ["java","-jar","app.jar"]
+ARG JAR_FILE=target/config-server.jar
+ADD ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
